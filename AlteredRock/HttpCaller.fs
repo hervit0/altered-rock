@@ -5,17 +5,17 @@ open FSharp.Data.JsonExtensions
 
 let pagination = 100
 
-let url (page:int) =
-    sprintf "https://driftrock-dev-test.herokuapp.com/purchases?page=%d&per_page=%d" page pagination
+let url (baseUrl:string) (page:int) =
+    sprintf "%spage=%d&per_page=%d" baseUrl page pagination
 
-let fetchByPage (page:int) =
-    let response = page |> url |> Http.RequestString |> JsonValue.Parse
-    seq { for purchase in response?data -> purchase?user_id }
+let fetchByPage (baseUrl:string) (page:int) =
+    let body = url baseUrl page |> Http.RequestString |> JsonValue.Parse
+    seq { for resource in body?data -> resource }
 
-let rec getResponse (page:int) (allPurchases:seq<JsonValue>) =
-    let purchases = fetchByPage page
+let rec fetchAllItems (baseUrl:string) (page:int) (allItems:seq<JsonValue>) =
+    let items = fetchByPage baseUrl page
 
-    match Seq.length(purchases) with
-    | quantity when quantity = pagination -> Seq.concat [ purchases; getResponse (page+1) allPurchases ]
-    | quantity when quantity < pagination -> Seq.concat [ purchases; allPurchases ]
-    | _ -> allPurchases
+    match Seq.length(items) with
+    | noItems when noItems = pagination -> Seq.concat [ items; fetchAllItems baseUrl (page+1) allItems ]
+    | noItems when noItems < pagination -> Seq.concat [ items; allItems ]
+    | _ -> allItems

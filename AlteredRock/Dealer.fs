@@ -18,7 +18,8 @@ let getCommand (commands:string list) =
 
 let getResult (commands:string list) =
     match getCommand(commands) with
-    | MostSold -> "You asked for the most_sold functionality!"
+    | MostSold -> Purchases.getMostSold
     | TotalSpend(email) -> "Some secrets need to stay in the shadow."
     | MostLoyal -> "What's loyalty, hu?"
-    | None -> HttpCaller.getResponse 1 Seq.empty |> Seq.map(fun x -> x.AsString()) |> Seq.toList |> String.concat(" ")
+    | None -> "Nope!"
+    // | None -> HttpCaller.getResponse 1 Seq.empty |> Seq.map(fun x -> x.AsString()) |> Seq.toList |> String.concat(" ")
