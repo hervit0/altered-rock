@@ -6,6 +6,7 @@
     <DebugType>portable</DebugType>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Dealer.fs" />
     <Compile Include="AlteredRock.fs" />
     <None Include="App.config" />
   </ItemGroup>

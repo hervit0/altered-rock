@@ -4,7 +4,7 @@ open System
 
 [<EntryPoint>]
 let main (argv:string[]) =
-    let commands = argv |> Array.toList |> String.concat("! ")
-    printfn "Did you ask for: %s" commands
+    let result = argv |> Array.toList |> Dealer.getResult
+    printfn "%s" result
     Console.ReadLine() |> ignore
     0
