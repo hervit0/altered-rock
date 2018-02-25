@@ -6,6 +6,8 @@
     <DebugType>portable</DebugType>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="HttpCaller.fs" />
+    <Compile Include="Purchases.fs" />
     <Compile Include="Dealer.fs" />
     <Compile Include="AlteredRock.fs" />
     <None Include="App.config" />

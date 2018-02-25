@@ -1,5 +1,8 @@
 module Dealer
 
+open FSharp.Data.JsonExtensions
+open FSharp.Data
+
 type Command =
     | MostSold
     | TotalSpend of string
@@ -18,4 +21,4 @@ let getResult (commands:string list) =
     | MostSold -> "You asked for the most_sold functionality!"
     | TotalSpend(email) -> "Some secrets need to stay in the shadow."
     | MostLoyal -> "What's loyalty, hu?"
-    | None -> "Hey mate, are you sure?"
+    | None -> HttpCaller.getResponse 1 Seq.empty |> Seq.map(fun x -> x.AsString()) |> Seq.toList |> String.concat(" ")

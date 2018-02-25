@@ -12,8 +12,8 @@ OR just Docker :smirk: ...
 
 ```
 cd AlteredRock
-dotnet restore
 paket install
+dotnet restore
 dotnet build
 ```
 
