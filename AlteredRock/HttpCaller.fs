@@ -19,3 +19,6 @@ let rec fetchAllItems (baseUrl:string) (page:int) (allItems:seq<JsonValue>) =
     | noItems when noItems = pagination -> Seq.concat [ items; fetchAllItems baseUrl (page+1) allItems ]
     | noItems when noItems < pagination -> Seq.concat [ items; allItems ]
     | _ -> allItems
+
+let fetchAll (baseUrl:string) =
+    fetchAllItems baseUrl 1 Seq.empty

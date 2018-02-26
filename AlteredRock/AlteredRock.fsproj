@@ -7,7 +7,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="HttpCaller.fs" />
+    <Compile Include="Users.fs" />
     <Compile Include="Purchases.fs" />
+    <Compile Include="Analytics.fs" />
     <Compile Include="Dealer.fs" />
     <Compile Include="AlteredRock.fs" />
     <None Include="App.config" />
