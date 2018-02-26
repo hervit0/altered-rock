@@ -4,12 +4,15 @@ open FSharp.Data
 open FSharp.Data.JsonExtensions
 open System
 
-let getMostSold : string =
+let getMostSold' (httpCaller:string -> seq<JsonValue>) : string =
     let (mostSoldItem, _) =
-        Purchases.getPurchases
+        Purchases.getPurchases' httpCaller
         |> Seq.countBy (fun purchase -> purchase.GetProperty("item"))
         |> Seq.maxBy (fun (_, count) -> count)
     mostSoldItem.AsString()
+
+let getMostSold : string =
+    getMostSold' HttpCaller.fetchAll
 
 let getMostLoyal : string =
     let (mostLoyalUserId, _) =

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="PurchasesTest.fs" />
+    <Compile Include="AlteredRockTest.fs" />
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../AlteredRock/AlteredRock.fsproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Fuchu" Version="1.0.3" NoWarn="NU1701" />
+  </ItemGroup>
+  <Import Project="..\.paket\Paket.Restore.targets" />
+</Project>

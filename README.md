@@ -19,6 +19,15 @@ dotnet build
 
 Add one: `dotnet add package Fuchu --version 1.0.3`
 
+## Run unit tests
+```
+cd AlteredRockTest
+paket install
+dotnet restore
+dotnet build
+dotnet run
+```
+
 ## Try it
 
 ```
