@@ -2,6 +2,7 @@ module Analytics
 
 open FSharp.Data
 open FSharp.Data.JsonExtensions
+open System
 
 let getMostSold : string =
     let (mostSoldItem, _) =
@@ -18,14 +19,16 @@ let getMostLoyal : string =
     Users.getById(mostLoyalUserId.AsString())
 
 let getTotalSpend (email:string) : string =
-    let userId = Users.getByEmail(email).GetProperty("id")
+    let userId = Users.getByEmail(email).GetProperty("id").AsString()
     let belongToUser =
         fun (purchase:JsonValue) ->
             match purchase.GetProperty("user_id").AsString() with
-            | userId -> Some(purchase)
+            | id when id = userId -> Some(purchase)
             | _ -> None
 
-    Purchases.getPurchases
-    |> Seq.collect belongToUser
+    let totalSpend =
+        Purchases.getPurchases
+        |> Seq.choose belongToUser
+        |> Seq.sumBy (fun purchase -> purchase.GetProperty("spend").AsFloat())
 
-    ""
+    Math.Round (totalSpend, 2) |> sprintf "%f"
