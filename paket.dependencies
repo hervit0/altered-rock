@@ -2,6 +2,7 @@ source https://www.nuget.org/api/v2
 
     nuget FSharp.Core
     nuget FSharp.Data ~> 2.4.0
+    nuget Fuchu ~> 1.0.3
 
 group Build
     source https://www.nuget.org/api/v2

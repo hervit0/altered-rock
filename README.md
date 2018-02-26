@@ -17,6 +17,8 @@ dotnet restore
 dotnet build
 ```
 
+Add one: `dotnet add package Fuchu --version 1.0.3`
+
 ## Try it
 
 ```

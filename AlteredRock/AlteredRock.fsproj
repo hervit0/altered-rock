@@ -14,5 +14,11 @@
     <Compile Include="AlteredRock.fs" />
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Fsharp.Core" Version="4.3.4" NoWarn="NU1701" />
+    <PackageReference Include="Fsharp.Data" Version="2.4.5" NoWarn="NU1701" />
+    <PackageReference Include="Fuchu" Version="1.0.3" NoWarn="NU1701" />
+    <PackageReference Include="Zlib.Portable" Version="1.11.0" NoWarn="NU1701" />
+  </ItemGroup>
   <Import Project="..\.paket\Paket.Restore.targets" />
 </Project>
