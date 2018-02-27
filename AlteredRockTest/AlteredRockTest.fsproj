@@ -7,6 +7,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="PurchasesTest.fs" />
+    <Compile Include="AnalyticsTest.fs" />
     <Compile Include="AlteredRockTest.fs" />
     <None Include="App.config" />
   </ItemGroup>

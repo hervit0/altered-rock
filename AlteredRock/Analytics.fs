@@ -1,28 +1,26 @@
 module Analytics
 
 open FSharp.Data
-open FSharp.Data.JsonExtensions
 open System
 
-let getMostSold' (httpCaller:string -> seq<JsonValue>) : string =
-    let (mostSoldItem, _) =
-        Purchases.getPurchases' httpCaller
-        |> Seq.countBy (fun purchase -> purchase.GetProperty("item"))
-        |> Seq.maxBy (fun (_, count) -> count)
-    mostSoldItem.AsString()
+let getMostSold' (httpCall:string -> seq<JsonValue>) : string =
+    let mostSoldItem = Purchases.getMaxBy' httpCall "item"
+    match mostSoldItem with
+    | JsonValue.Null -> "No most sold item found"
+    | _ -> mostSoldItem.AsString()
 
-let getMostSold : string =
-    getMostSold' HttpCaller.fetchAll
+let getMostSold : string = getMostSold' HttpCaller.fetchAll
 
-let getMostLoyal : string =
-    let (mostLoyalUserId, _) =
-        Purchases.getPurchases
-        |> Seq.countBy (fun purchase -> purchase.GetProperty("user_id"))
-        |> Seq.maxBy (fun (_, count) -> count)
+let getMostLoyal' (httpCall:string -> seq<JsonValue>) : string =
+    let mostLoyalUserId = Purchases.getMaxBy' httpCall "user_id"
     Users.getById(mostLoyalUserId.AsString())
 
-let getTotalSpend (email:string) : string =
-    let userId = Users.getByEmail(email).GetProperty("id").AsString()
+let getMostLoyal : string = getMostLoyal' HttpCaller.fetchAll
+
+let getTotalSpend' (httpCall:string -> seq<JsonValue>) (email:string) : string =
+    let userId =
+        (Users.getByEmail' httpCall email).GetProperty("id").AsString()
+
     let belongToUser =
         fun (purchase:JsonValue) ->
             match purchase.GetProperty("user_id").AsString() with
@@ -30,8 +28,10 @@ let getTotalSpend (email:string) : string =
             | _ -> None
 
     let totalSpend =
-        Purchases.getPurchases
+        Purchases.getPurchases' httpCall
         |> Seq.choose belongToUser
         |> Seq.sumBy (fun purchase -> purchase.GetProperty("spend").AsFloat())
 
     Math.Round (totalSpend, 2) |> sprintf "%f"
+
+let getTotalSpend (email:string) : string = getTotalSpend' HttpCaller.fetchAll email

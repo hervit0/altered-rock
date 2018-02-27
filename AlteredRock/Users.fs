@@ -5,15 +5,26 @@ open FSharp.Data.JsonExtensions
 
 let baseUrl = "https://driftrock-dev-test.herokuapp.com/users?"
 
-let getUsers : seq<JsonValue> = HttpCaller.fetchAll baseUrl
+let getUsers' (httpCall:string -> seq<JsonValue>) : seq<JsonValue> = httpCall baseUrl
 
-let getById (id:string) : string =
+let getUsers : seq<JsonValue> = getUsers' HttpCaller.fetchAll
+
+let findUserBy (property:string) (user:JsonValue) (target:string) =
+    (user.GetProperty(property).AsString() = target)
+
+let getById' (httpCall:string -> seq<JsonValue>) (id:string) : string =
+    let findUserById = findUserBy "id"
     let user =
-        getUsers
-        |> Seq.find (fun user -> user.GetProperty("id").AsString() = id)
+        getUsers' httpCall
+        |> Seq.find (fun user -> findUserById user id)
 
     [user?first_name.AsString(); user?last_name.AsString()] |> String.concat(" ")
 
-let getByEmail (email:string) : JsonValue =
-    getUsers
-    |> Seq.find (fun user -> user.GetProperty("email").AsString() = email)
+let getById (id:string) : string = getById' HttpCaller.fetchAll id
+
+let getByEmail' (httpCall:string -> seq<JsonValue>) (email:string) : JsonValue =
+    let findUserByEmail = findUserBy "email"
+    getUsers' httpCall
+    |> Seq.find (fun user -> findUserByEmail user email)
+
+let getByEmail (email:string) : JsonValue = getByEmail' HttpCaller.fetchAll email
