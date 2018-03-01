@@ -6,11 +6,11 @@
     <DebugType>portable</DebugType>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="HttpCaller.fs" />
-    <Compile Include="Users.fs" />
-    <Compile Include="Purchases.fs" />
-    <Compile Include="Analytics.fs" />
-    <Compile Include="Dealer.fs" />
+    <Compile Include="src/HttpCaller.fs" />
+    <Compile Include="src/Users.fs" />
+    <Compile Include="src/Purchases.fs" />
+    <Compile Include="src/Analytics.fs" />
+    <Compile Include="src/Dealer.fs" />
     <Compile Include="AlteredRock.fs" />
     <None Include="App.config" />
   </ItemGroup>
