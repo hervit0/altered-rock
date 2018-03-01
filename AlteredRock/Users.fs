@@ -3,7 +3,7 @@ module Users
 open FSharp.Data
 open FSharp.Data.JsonExtensions
 
-let baseUrl = "https://driftrock-dev-test.herokuapp.com/users?"
+let baseUrl = "https://driftrock-dev-test.herokuapp.com/users"
 
 let getUsers' (httpCall:string -> seq<JsonValue>) : seq<JsonValue> = httpCall baseUrl
 

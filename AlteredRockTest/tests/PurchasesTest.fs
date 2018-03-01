@@ -14,4 +14,3 @@ let getPurchasesTest =
         let mockHttpCall = fun _ -> mockResponse
 
         fun _ -> Assert.Equal("", getPurchases' mockHttpCall, mockResponse)
-
