@@ -7,7 +7,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="tests/PurchasesTest.fs" />
-    <Compile Include="tests/AnalyticsTest.fs" />
+    <Compile Include="tests/MostSoldTest.fs" />
+    <Compile Include="tests/MostLoyalTest.fs" />
     <Compile Include="AlteredRockTest.fs" />
     <None Include="App.config" />
   </ItemGroup>
@@ -15,6 +16,7 @@
     <ProjectReference Include="../AlteredRock/AlteredRock.fsproj" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Fsharp.Data" Version="2.4.5" NoWarn="NU1701" />
     <PackageReference Include="Fuchu" Version="1.0.3" NoWarn="NU1701" />
   </ItemGroup>
   <Import Project="..\.paket\Paket.Restore.targets" />

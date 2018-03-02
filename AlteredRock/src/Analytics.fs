@@ -9,18 +9,21 @@ let displayMultipleItems (items:seq<JsonValue>) : string =
     |> String.concat "\n"
 
 let getMostSold' (httpCall:string -> seq<JsonValue>) : string =
-    let mostSoldItem = Purchases.getMaxBy' httpCall "item"
-    match mostSoldItem with
-    | m when m = Seq.empty -> "No most sold item found"
-    | _ -> displayMultipleItems mostSoldItem
+    let mostSoldItems = Purchases.getMaxBy' httpCall "item"
+    match mostSoldItems with
+    | items when items = Seq.empty -> "No most sold item found"
+    | _ -> displayMultipleItems mostSoldItems
 
 let getMostSold : string = getMostSold' HttpCaller.fetchAll
 
 let getMostLoyal' (httpCall:string -> seq<JsonValue>) : string =
     let mostLoyalUserIds = Purchases.getMaxBy' httpCall "user_id"
-    mostLoyalUserIds
-    |> Seq.map (fun item -> Users.getById(item.AsString()))
-    |> String.concat "\n"
+    match mostLoyalUserIds with
+    | ids when ids = Seq.empty -> "No loyal user found"
+    | _ -> mostLoyalUserIds
+        |> Seq.map (fun item -> item.AsString())
+        |> Seq.map (fun id -> Users.getById' httpCall id)
+        |> String.concat "\n"
 
 let getMostLoyal : string = getMostLoyal' HttpCaller.fetchAll
 
