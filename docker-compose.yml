@@ -1,0 +1,19 @@
+version: '2'
+services:
+  altered-rock:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    working_dir: /usr/src/app
+    command: 'sh -c "while sleep 1; do :; done"'
+    volumes:
+      - 'altered-rock-sync:/usr/src/app:rw'
+    # environment:
+    #   PORT: 3020
+    #   NODE_PORT: 3021
+    # ports:
+    #   - '3020:3020'
+    #   - '3021:3021'
+volumes:
+  altered-rock-sync:
+    external: true

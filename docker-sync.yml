@@ -1,0 +1,19 @@
+version: '2'
+options:
+  verbose: true
+syncs:
+  altered-rock-sync:
+    src: .
+    sync_args:
+      - '-prefer newer'
+    sync_excludes:
+      - tmp
+      - .git
+      - .git-crypt
+      - log
+      - .bundle
+      - node_modules
+      - deps
+      - _build
+      - .docker-sync
+      - .fake/
